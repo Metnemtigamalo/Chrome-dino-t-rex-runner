@@ -465,8 +465,8 @@ def gameplay(background_image, background_rect):
             if len(enemies) == 0 and random.randrange(0, 200) == 10:
                 for l in last_obstacle:
                      if l.rect.right < width * 0.8:
-                     last_obstacle.empty()
-                     last_obstacle.add(Enemy(gamespeed, 40, 40))
+                        last_obstacle.empty()
+                        last_obstacle.add(Enemy(gamespeed, 40, 40))
 
             if len(clouds) < 5 and random.randrange(0,300) == 10:
                 Cloud(width,random.randrange(height/5,height/2))
