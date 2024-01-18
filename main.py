@@ -374,11 +374,13 @@ def gameplay(background_image, background_rect):
 
     cacti = pygame.sprite.Group()
     pteras = pygame.sprite.Group()
+    enemies = pygame.sprite.Group()
     clouds = pygame.sprite.Group()
     last_obstacle = pygame.sprite.Group()
 
     Cactus.containers = cacti
     Ptera.containers = pteras
+    Enemy.containers = enemies
     Cloud.containers = clouds
 
     retbutton_image,retbutton_rect = load_image('replay_button.png',35,31,-1)
@@ -437,6 +439,13 @@ def gameplay(background_image, background_rect):
                     if pygame.mixer.get_init() != None:
                         die_sound.play()
 
+            for e in enemies:
+                e.movement[0] = -1*gamespeed
+                if pygame.sprite.collide_mask(playerDino,e):
+                    playerDino.isDead = True
+                    if pygame.mixer.get_init() != None:
+                        die_sound.play()            
+
             if len(cacti) < 2:
                 if len(cacti) == 0:
                     last_obstacle.empty()
@@ -452,6 +461,12 @@ def gameplay(background_image, background_rect):
                     if l.rect.right < width*0.8:
                         last_obstacle.empty()
                         last_obstacle.add(Ptera(gamespeed, 46, 40))
+            
+            if len(enemies) == 0 and random.randrange(0, 200) == 10:
+                for l in last_obstacle:
+                     if l.rect.right < width * 0.8:
+                     last_obstacle.empty()
+                     last_obstacle.add(Enemy(gamespeed, 40, 40))
 
             if len(clouds) < 5 and random.randrange(0,300) == 10:
                 Cloud(width,random.randrange(height/5,height/2))
@@ -459,6 +474,7 @@ def gameplay(background_image, background_rect):
             playerDino.update()
             cacti.update()
             pteras.update()
+            enemies.update()
             clouds.update()
             new_ground.update()
             scb.update(playerDino.score)
@@ -475,6 +491,7 @@ def gameplay(background_image, background_rect):
                     screen.blit(HI_image,HI_rect)
                 cacti.draw(screen)
                 pteras.draw(screen)
+                enemies.draw(screen)
                 playerDino.draw()
 
                 pygame.display.update()
