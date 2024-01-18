@@ -1,0 +1,11 @@
+Changelog:
+
+1. change every sprite: background, cacti_big, cacti_small, dino (tails), dino_ducking (tails ducking), ground, logo, offline sprite, ptera
+2. change size: background etc
+3. change speed 
+4. add enemie code
+5. code corection
+6. create enemy sprite
+7. background change
+8. delete junk parts
+9. cleanup the code 
