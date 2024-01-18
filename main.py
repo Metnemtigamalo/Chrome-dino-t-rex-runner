@@ -1,6 +1,5 @@
-# Coded by Ehsonjon TJK 13.03.2020 (22:27) @icoder-new
 
-__author__ = "Ehsonjon Gadoev"
+__author__ = "Dulovic Lejs"
 
 import os
 import sys
@@ -10,7 +9,7 @@ from pygame import *
 
 pygame.init()
 
-scr_size = (width,height) = (600,150)
+scr_size = (width,height) = (650,300)
 FPS = 60
 gravity = 0.6
 
@@ -22,7 +21,7 @@ high_score = 0
 
 screen = pygame.display.set_mode(scr_size)
 clock = pygame.time.Clock()
-pygame.display.set_caption("Dino Run ")
+pygame.display.set_caption("Tails Run ")
 
 jump_sound = pygame.mixer.Sound('sprites/jump.wav')
 die_sound = pygame.mixer.Sound('sprites/die.wav')
@@ -303,7 +302,7 @@ def introscreen():
     temp_ground_rect.left = width/20
     temp_ground_rect.bottom = height
 
-    logo,logo_rect = load_image('logo.png',300,140,-1)
+    logo,logo_rect = load_image('logo.png',250,230,-1)
     logo_rect.centerx = width*0.6
     logo_rect.centery = height*0.6
     while not gameStart:
@@ -335,7 +334,15 @@ def introscreen():
         if temp_dino.isJumping == False and temp_dino.isBlinking == False:
             gameStart = True
 
-def gameplay():
+def main():
+    background_image, background_rect = load_image('background.png', 955, 538, -1)
+
+    isGameQuit = introscreen()
+    if not isGameQuit:
+        gameplay(background_image, background_rect)
+
+
+def gameplay(background_image, background_rect):
     global high_score
     gamespeed = 4
     startMenu = False
@@ -422,7 +429,7 @@ def gameplay():
                             last_obstacle.empty()
                             last_obstacle.add(Cactus(gamespeed, 40, 40))
 
-            if len(pteras) == 0 and random.randrange(0,200) == 10 and counter > 500:
+            if len(pteras) == 0 and random.randrange(0,150) == 10 and counter > 500:
                 for l in last_obstacle:
                     if l.rect.right < width*0.8:
                         last_obstacle.empty()
@@ -441,6 +448,7 @@ def gameplay():
 
             if pygame.display.get_surface() != None:
                 screen.fill(background_col)
+                screen.blit(background_image, background_rect)
                 new_ground.draw()
                 clouds.draw(screen)
                 scb.draw()
@@ -497,10 +505,4 @@ def gameplay():
 
     pygame.quit()
     quit()
-
-def main():
-    isGameQuit = introscreen()
-    if not isGameQuit:
-        gameplay()
-
-main()
+main() 
